@@ -3,7 +3,7 @@ import { Field, ObjectType, ID } from 'type-graphql';
 import { IsDate } from 'class-validator';
 
 @ObjectType()
-export class User {
+export class Ride {
   @Field(type => ID, { nullable: false })
   id: number;
 
