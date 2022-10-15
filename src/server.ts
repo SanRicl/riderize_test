@@ -1,14 +1,30 @@
 import 'reflect-metadata';
 import 'dotenv/config';
-import morgan from 'morgan';
+// import morgan from 'morgan';
+import { ApolloServer } from 'apollo-server';
 
-import express, { NextFunction, Request, Response } from 'express';
-import { buildSchema } from 'type-graphql';
-const app = express();
+import { context } from './context';
 
-app.use(express.json());
-app.use(morgan('combined'));
+import schemas from './schemas';
 
-app.listen(3000, () => {
-  console.log('App running on port: 3000');
-});
+const app = async () => {
+  const schema = await schemas;
+
+  const server = new ApolloServer({
+    schema,
+    context,
+    // context: ({ req }) => {
+    //   const context = {
+    //     req,
+    //     token: req?.headers?.authorization,
+    //   };
+
+    //   return context;
+    // },
+  });
+  server.listen({ port: 4000 }, () =>
+    console.log('Server is running on port 4000'),
+  );
+};
+
+app();
