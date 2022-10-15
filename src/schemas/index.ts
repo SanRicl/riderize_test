@@ -5,9 +5,18 @@ import Auth from './Auth';
 import { User } from './User';
 
 import AuthenticationAssurance from '../middlewares/AuthenticationAssurance';
+import { RideResolver } from '../resolvers/RideResolver';
+import { SubscriptionResolver } from '../resolvers/SubscriptionResolver';
 
 const schema = buildSchema({
-  resolvers: [UserResolver, SessionResolver, User, Auth],
+  resolvers: [
+    UserResolver,
+    SessionResolver,
+    User,
+    Auth,
+    RideResolver,
+    SubscriptionResolver,
+  ],
   authChecker: AuthenticationAssurance,
 });
 
