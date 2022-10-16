@@ -11,7 +11,9 @@ const AuthenticationAssurance: AuthChecker<Context> = ({
 }): boolean => {
   const authHeader = context.token;
 
-  if (!authHeader) return false;
+  if (!authHeader) {
+    return false;
+  }
 
   const [, token] = authHeader.split(' ');
 
@@ -19,7 +21,7 @@ const AuthenticationAssurance: AuthChecker<Context> = ({
     const decoded = verify(token, AuthConfig.jwt.secret);
 
     return !!decoded;
-  } catch (error) {
+  } catch {
     return false;
   }
 };

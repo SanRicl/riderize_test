@@ -8,20 +8,17 @@ import { Context } from '../context';
 import { User } from '../schemas/User';
 
 @Resolver(Auth)
-class SessionResolver {
+export class SessionResolver {
   @Authorized()
   @Query(() => User, { nullable: true })
   async privateInfo(
-    @Arg('token') token: string,
+    @Arg('id') id: number,
     @Ctx() ctx: Context,
   ): Promise<User | null> {
-    const dbToken = await ctx.prisma.token.findUnique({
-      where: { token },
-      include: { user: true },
+    const user = await ctx.prisma.user.findUnique({
+      where: { id },
     });
-    if (!dbToken) return null;
-
-    const { user } = dbToken;
+    if (!user) return null;
 
     return user;
   }
@@ -42,17 +39,13 @@ class SessionResolver {
 
     const { secret, expiresIn } = AuthConfig.jwt;
 
-    const tokenCode = sign({}, secret, {
+    const token = sign({}, secret, {
       subject: `"${user.id}`,
       expiresIn,
     });
 
-    const token = await ctx.prisma.token.create({
-      data: { token: tokenCode, user: { connect: { id: user.id } } },
-    });
-
     return {
-      token: token.token,
+      token,
       user,
     };
   }

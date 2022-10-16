@@ -13,7 +13,7 @@ import { Ride } from '../schemas/Ride';
 import { Context } from '../context';
 
 @InputType()
-export class RideInputData {
+class RideInputData {
   @Field(type => String, { nullable: false })
   name: string;
 

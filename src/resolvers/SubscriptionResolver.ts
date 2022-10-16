@@ -1,5 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Arg, Ctx, Field, InputType, Mutation, Resolver } from 'type-graphql';
+import {
+  Arg,
+  Ctx,
+  Field,
+  InputType,
+  Mutation,
+  Query,
+  Resolver,
+} from 'type-graphql';
 import { Subscription } from '../schemas/Subscription';
 import { Context } from '../context';
 
@@ -28,5 +36,17 @@ export class SubscriptionResolver {
     if (!ride) throw new Error('Ride does not exists');
 
     return await ctx.prisma.subscription.create({ data });
+  }
+  @Query(() => Subscription, { nullable: true })
+  async findParticipatedRides(
+    @Arg('user_id') user_id: number,
+    @Ctx() ctx: Context,
+  ): Promise<Subscription | null> {
+    const ridesParticipated = await ctx.prisma.subscription.findFirst({
+      where: { id: user_id },
+    });
+    if (!ridesParticipated) return null;
+
+    return ridesParticipated;
   }
 }
