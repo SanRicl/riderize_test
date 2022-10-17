@@ -18,9 +18,6 @@ import { User } from '../schemas/User';
 
 @InputType()
 class RideInputData {
-  @Field(type => ID, { nullable: false })
-  id: number;
-
   @Field(type => String, { nullable: false })
   name: string;
 
