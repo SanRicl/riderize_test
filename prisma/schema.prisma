@@ -14,25 +14,15 @@ model User {
   id            Int            @id @default(autoincrement())
   email         String         @unique
   password      String
-  created_at     DateTime       @default(now())
+  created_at    DateTime       @default(now())
   subscriptions Subscription[]
-  tokens        Token[]
+  rides         Ride[]
 
   @@map("users")
 }
 
-model Token {
-  id      Int    @id @default(autoincrement())
-  token   String @unique
-  user_id Int
-
-  user User @relation(fields: [user_id], references: [id])
-
-  @@map("tokens")
-}
-
 model Ride {
-  id                      Int      @id @default(autoincrement())
+  id                      Int            @id @default(autoincrement())
   name                    String
   start_date              DateTime
   start_date_registration DateTime
@@ -40,8 +30,10 @@ model Ride {
   additional_information  String?
   start_place             String
   participants_limit      Int?
-
-  subscriptions Subscription[]
+  created_at              DateTime       @default(now())
+  subscriptions           Subscription[]
+  User                    User?          @relation(fields: [userId], references: [id])
+  userId                  Int?
 
   @@map("rides")
 }

@@ -11,10 +11,14 @@ export interface IRide {
   additional_information: string | null;
   start_place: string;
   participants_limit: string | null;
+  userId: number;
 }
 
 @ObjectType()
 export class Ride {
+  @Field(type => ID, { nullable: false })
+  id: number;
+
   @Field(type => String, { nullable: false })
   name: string;
 
@@ -38,4 +42,7 @@ export class Ride {
 
   @Field(type => Number, { nullable: true })
   participants_limit: number | null;
+
+  @Field(type => Number, { nullable: false })
+  userId: number;
 }

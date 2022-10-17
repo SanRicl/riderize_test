@@ -9,15 +9,6 @@ CREATE TABLE "users" (
 );
 
 -- CreateTable
-CREATE TABLE "tokens" (
-    "id" SERIAL NOT NULL,
-    "token" TEXT NOT NULL,
-    "user_id" INTEGER NOT NULL,
-
-    CONSTRAINT "tokens_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
 CREATE TABLE "rides" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
@@ -27,6 +18,8 @@ CREATE TABLE "rides" (
     "additional_information" TEXT,
     "start_place" TEXT NOT NULL,
     "participants_limit" INTEGER,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "userId" INTEGER,
 
     CONSTRAINT "rides_pkey" PRIMARY KEY ("id")
 );
@@ -44,11 +37,8 @@ CREATE TABLE "subscriptions" (
 -- CreateIndex
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 
--- CreateIndex
-CREATE UNIQUE INDEX "tokens_token_key" ON "tokens"("token");
-
 -- AddForeignKey
-ALTER TABLE "tokens" ADD CONSTRAINT "tokens_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "rides" ADD CONSTRAINT "rides_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "subscriptions" ADD CONSTRAINT "subscriptions_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
