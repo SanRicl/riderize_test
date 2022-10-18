@@ -1,0 +1,140 @@
+# Description
+
+Resolução do challenge imposto pela RideRize.
+
+# Tecnologias utilizadas no projeto
+
+- NodeJS
+
+- Prisma
+
+- Typescript
+
+- Type-GraphQL
+
+- Apollo Server
+
+- JWT
+
+- Babel
+
+- Nodemon
+
+- PM2 (utilizado na AWS)
+
+<br>
+
+## Deploy na AWS
+
+- http://18.231.15.69:8000/
+
+<br>
+
+## Instalação
+
+```
+$ npm install
+```
+
+# Subindo banco de dados
+
+```
+$ npx prisma migrate dev || yarn prisma migrate dev
+```
+<br>
+
+# Nota
+- 1_ Um arquivo .env deve ser criado no root da aplicação com os dados do banco de dados caso o prisma nao o gere automaticamente. Abaixo segue o conteudo do arquivo. Modifique com as suas informações.
+
+```
+DATABASE_URL="postgresql://postgres:YOUR_BD_PASSWORD@localhost:5432/YOUR_BD_NAME?schema=public"
+```
+- 2_ Insira corretamente os dados nos campos ao cadastrar novos pedais. Os campos que estão com a identificação de date_, são do tipo Data. Ex: 2022-01-12 = YYYY-MM-DD.
+
+
+## Rodando aplicação
+
+```bash
+# development
+$ npm run dev || yarn run dev
+# build
+$ npm run build || yarn run build
+# production mode
+$ npm start || yarn start
+```
+
+<br />
+
+# Desafio Backend - Riderize
+
+Olá Dev! Tudo bem?
+
+Nesse desafio você construirá uma versão simples de combinar pedaladas em grupo, quem sabe talvez isso não desperte seu interesse em fazer alguns pedais?
+
+# Contexto do desafio
+
+O objetivo desse desafio é criar uma API que irá possibilitar a criação de pedais pelos usuários, além disso outros usuários poderão visualizar esses pedais e se inscrever neles para que no dia marcado aqueles que se inscreveram possam pedalar em grupo.
+
+Para tal será necessário:
+
+- Criar os pedais com os seguintes dados:
+
+| Atributo                |  Tipo  | Nullable |
+| ----------------------- | :----: | -------: |
+| id                      |   -    |    false |
+| name                    | string |    false |
+| start_date              |  Date  |    false |
+| start_date_registration |  Date  |    false |
+| end_date_registration   |  Date  |    false |
+| additional_information  |  text  |     true |
+| start_place             | string |    false |
+| participants_limit      | number |     true |
+
+- Uma vez criado, os pedais deverão ser exibidos para que o usuários possam se inscrever, para isso será necessário passar os seguintes dados:
+
+| Atributo          | Tipo | Nullable |
+| ----------------- | :--: | -------: |
+| ride_id           |  -   |    false |
+| user_id           |  -   |    false |
+| subscription_date | Date |    false |
+
+- Será preciso também listar os pedais que o usuário participou;
+- Listar também os pedais que o usuário criou;
+- Não permitir inscrição em pedais depois da última data de inscrição;
+- User_id vem de alguma tabela de usuário ao seu critério;
+
+# Requisitos
+
+- Deverá ser utilizado o NodeJS;
+- Utilizar o TypeScript;
+- A API deverá ser construída usando o GraphQL;
+- Os dados deverão persistir em algum DB, aqui no Riderize usamos o PostgreSQL para isso;
+- Todas as consultas deverão ser feitas usando o seguinte header de autenticação, para isso será necessário usar o JWT:
+  `Authentication: Bearer <THE.JWT.TOKEN>`;
+
+# Bônus
+
+- Fazer cache das consultas de listagem dos pedais;
+- Usar o Docker para rodar o projeto;
+- Fazer a hospedagem da API (Heroku, AWS, GCP);
+- Construir Pipeline de CI/CD;
+- Construir testes automatizados da API;
+
+# Ferramentas recomendadas
+
+Não é obrigatório utilizar essas ferramentas, elas são apenas uma recomendação pois são elas que usamos aqui no Riderize:
+
+- Express;
+- Apollo Server;
+- TypeGraphQL;
+- Prisma;
+- Docker;
+- Redis;
+
+# Avaliação
+
+Para que possamos avaliar o seu teste pedimos que envie o link do repositório que você criou para o email contato@riderize.com.
+
+# Dúvidas
+
+Para qualquer dúvida, pode ser aberta uma ISSUE neste repositório.

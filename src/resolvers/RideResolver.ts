@@ -1,6 +1,5 @@
 import {
   Arg,
-  Authorized,
   Ctx,
   FieldResolver,
   Mutation,
@@ -14,18 +13,16 @@ import { RideInputData } from './InputTypes/InputTypes';
 
 @Resolver(Ride)
 export class RideResolver {
-  @Authorized()
   @Mutation(() => Ride)
   async createRide(
     @Arg('data') data: RideInputData,
     @Ctx() ctx: Context,
   ): Promise<Ride> {
-    const newRide = await ctx.prisma.ride.create({
+    return await ctx.prisma.ride.create({
       data,
     });
-    return newRide;
   }
-  @Authorized()
+
   @FieldResolver(() => User)
   async user(@Root() ride: Ride, @Ctx() ctx: Context) {
     const user = await ctx.prisma.user.findUnique({

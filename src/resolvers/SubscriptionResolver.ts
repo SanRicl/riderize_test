@@ -1,6 +1,5 @@
 import {
   Arg,
-  Authorized,
   Ctx,
   FieldResolver,
   Mutation,
@@ -39,7 +38,6 @@ export class SubscriptionResolver {
     return await ctx.prisma.subscription.create({ data });
   }
 
-  @Authorized()
   @FieldResolver(() => [Ride])
   async rides(
     @Root() subscription: Subscription,

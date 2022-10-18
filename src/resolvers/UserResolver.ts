@@ -64,7 +64,7 @@ export class UserResolver {
     if (!user) throw new Error('User does not exists');
     return user;
   }
-  @Authorized()
+
   @FieldResolver(() => [Subscription])
   async subscription(
     @Root() subscription: Subscription,

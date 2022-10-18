@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { IsEmail } from 'class-validator';
+import { IsEmail, IsDate } from 'class-validator';
 import { Field, InputType } from 'type-graphql';
 
 @InputType()
