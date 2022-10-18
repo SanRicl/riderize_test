@@ -2,30 +2,18 @@ import {
   Arg,
   Authorized,
   Ctx,
-  Field,
   FieldResolver,
-  InputType,
   Mutation,
   Query,
   Resolver,
   Root,
 } from 'type-graphql';
-import { IsEmail } from 'class-validator';
 import { User } from '../schemas/User';
 import { Context } from '../context';
 import { hash } from 'bcryptjs';
 import { Ride } from '../schemas/Ride';
 import { Subscription } from '../schemas/Subscription';
-
-@InputType()
-export class UserInputData {
-  @Field()
-  @IsEmail()
-  email: string;
-
-  @Field()
-  password: string;
-}
+import { UserInputData } from './InputTypes/InputTypes';
 
 @Resolver(User)
 export class UserResolver {
@@ -36,10 +24,13 @@ export class UserResolver {
   ): Promise<User> {
     const hashedPassword = await hash(data.password, 10);
 
-    return await ctx.prisma.user.create({
+    const newUser = await ctx.prisma.user.create({
       data: { ...data, password: hashedPassword },
     });
+
+    return newUser;
   }
+
   @Authorized()
   @Query(() => User)
   async getRideCreatedByUser(
@@ -49,6 +40,8 @@ export class UserResolver {
     const user = await ctx.prisma.user.findUnique({
       where: { id },
     });
+
+    if (!user) throw new Error('User does not exists');
     return user;
   }
 
@@ -57,6 +50,7 @@ export class UserResolver {
     const rides = await ctx.prisma.ride.findMany({
       where: { userId: user.id },
     });
+
     return rides;
   }
 
@@ -65,21 +59,21 @@ export class UserResolver {
   async getParticipatedRidesByUser(
     @Ctx() ctx: Context,
     @Arg('id') id: number,
-  ): Promise<User[] | null> {
-    const user = await ctx.prisma.user.findMany({
-      where: { id },
-    });
+  ): Promise<User[]> {
+    const user = await ctx.prisma.user.findMany({ where: { id } });
+    if (!user) throw new Error('User does not exists');
     return user;
   }
-
+  @Authorized()
   @FieldResolver(() => [Subscription])
   async subscription(
     @Root() subscription: Subscription,
     @Ctx() ctx: Context,
   ): Promise<Subscription[]> {
-    const rides = await ctx.prisma.subscription.findMany({
-      where: { ride_id: subscription.id },
+    const subscriptions = await ctx.prisma.subscription.findMany({
+      where: { user_id: subscription.id },
     });
-    return rides;
+
+    return subscriptions;
   }
 }

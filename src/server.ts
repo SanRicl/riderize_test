@@ -1,6 +1,5 @@
 import 'reflect-metadata';
 import 'dotenv/config';
-// import morgan from 'morgan';
 import { ApolloServer } from 'apollo-server';
 
 import { context } from './context';
@@ -12,7 +11,12 @@ const app = async () => {
   const server = new ApolloServer({
     schema,
     context,
+    cors: {
+      origin: '*',
+      credentials: true,
+    },
   });
+
   server.listen({ port: 4000 }, () =>
     console.log('Server is running on port 4000'),
   );

@@ -1,32 +1,16 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   Arg,
   Authorized,
   Ctx,
-  Field,
   FieldResolver,
-  InputType,
   Mutation,
-  Query,
   Resolver,
   Root,
 } from 'type-graphql';
 import { Subscription } from '../schemas/Subscription';
 import { Context } from '../context';
 import { Ride } from '../schemas/Ride';
-import { User } from '../schemas/User';
-
-@InputType()
-class SubscriptionInputData {
-  @Field(type => Number, { nullable: false })
-  ride_id: number;
-
-  @Field(type => Number, { nullable: false })
-  user_id: number;
-
-  @Field(type => Date, { nullable: false })
-  subscription_date: Date;
-}
+import { SubscriptionInputData } from './InputTypes/InputTypes';
 
 @Resolver(Subscription)
 export class SubscriptionResolver {
@@ -56,15 +40,6 @@ export class SubscriptionResolver {
   }
 
   @Authorized()
-  @Query(() => [Subscription])
-  async getRidesBySubscription(
-    @Ctx() ctx: Context,
-    @Arg('id') id: number,
-  ): Promise<Subscription[] | null> {
-    const user = await ctx.prisma.subscription.findMany();
-    return user;
-  }
-
   @FieldResolver(() => [Ride])
   async rides(
     @Root() subscription: Subscription,

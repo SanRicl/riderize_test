@@ -1,28 +1,13 @@
-import { Arg, Authorized, Ctx, Mutation, Query, Resolver } from 'type-graphql';
+import { Arg, Ctx, Mutation, Resolver } from 'type-graphql';
 import { compare } from 'bcryptjs';
 import Auth from '../schemas/Auth';
 import AuthConfig from '../config/auth';
 import { sign } from 'jsonwebtoken';
-import { UserInputData } from './UserResolver';
 import { Context } from '../context';
-import { User } from '../schemas/User';
+import { UserInputData } from './InputTypes/InputTypes';
 
 @Resolver(Auth)
 export class SessionResolver {
-  @Authorized()
-  @Query(() => User, { nullable: true })
-  async privateInfo(
-    @Arg('id') id: number,
-    @Ctx() ctx: Context,
-  ): Promise<User | null> {
-    const user = await ctx.prisma.user.findUnique({
-      where: { id },
-    });
-    if (!user) return null;
-
-    return user;
-  }
-
   @Mutation(() => Auth)
   async signIn(@Arg('data') data: UserInputData, @Ctx() ctx: Context) {
     const user = await ctx.prisma.user.findUnique({

@@ -33,7 +33,7 @@ model Ride {
   created_at              DateTime       @default(now())
   subscriptions           Subscription[]
   User                    User?          @relation(fields: [userId], references: [id])
-  userId                  Int?
+  userId                  Int
 
   @@map("rides")
 }

@@ -7,10 +7,10 @@ export interface IRide {
   name: string;
   start_date: string;
   start_date_registration: string;
-  end_date_registration: Date;
-  additional_information: string | null;
+  end_date_registration: string;
+  additional_information: string;
   start_place: string;
-  participants_limit: string | null;
+  participants_limit: string;
   userId: number;
 }
 
