@@ -6,6 +6,8 @@ import { context } from './context';
 
 import schemas from './schemas';
 
+const APP_PORT = 8000;
+
 const app = async () => {
   const schema = await schemas;
   const server = new ApolloServer({
@@ -17,8 +19,8 @@ const app = async () => {
     },
   });
 
-  server.listen({ port: 4000 }, () =>
-    console.log('Server is running on port 4000'),
+  server.listen({ port: APP_PORT }, () =>
+    console.log(`Server is running on port ${APP_PORT}`),
   );
 };
 
