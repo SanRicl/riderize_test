@@ -55,12 +55,12 @@ export class UserResolver {
   }
 
   @Authorized()
-  @Query(() => [User])
+  @Query(() => User)
   async getParticipatedRidesByUser(
     @Ctx() ctx: Context,
     @Arg('id') id: number,
-  ): Promise<User[]> {
-    const user = await ctx.prisma.user.findMany({ where: { id } });
+  ): Promise<User> {
+    const user = await ctx.prisma.user.findUnique({ where: { id } });
     if (!user) throw new Error('User does not exists');
     return user;
   }

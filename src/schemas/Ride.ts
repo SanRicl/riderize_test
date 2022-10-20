@@ -23,13 +23,13 @@ export class Ride {
   end_date_registration: Date;
 
   @Field(type => String, { nullable: true })
-  additional_information: string;
+  additional_information: string | null;
 
   @Field(type => String, { nullable: false })
   start_place: string;
 
   @Field(type => Number, { nullable: true })
-  participants_limit: number;
+  participants_limit: number | null;
 
   @Field(type => Number, { nullable: false })
   userId: number;
