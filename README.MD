@@ -39,6 +39,7 @@ $ npm install
 # Subindo banco de dados
 
 ```
+$ npx prisma db push || yarn prisma db pull
 $ npx prisma migrate dev || yarn prisma migrate dev
 ```
 <br>
