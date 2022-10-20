@@ -39,6 +39,7 @@ $ npm install
 # Subindo banco de dados
 
 ```
+$ docker compose up
 $ npx prisma db push || yarn prisma db pull
 $ npx prisma migrate dev || yarn prisma migrate dev
 ```
@@ -48,7 +49,7 @@ $ npx prisma migrate dev || yarn prisma migrate dev
 - 1_ Um arquivo .env deve ser criado no root da aplicação com os dados do banco de dados caso o prisma nao o gere automaticamente. Abaixo segue o conteudo do arquivo. Modifique com as suas informações.
 
 ```
-DATABASE_URL="postgresql://postgres:YOUR_BD_PASSWORD@localhost:5432/YOUR_BD_NAME?schema=public"
+DATABASE_URL="postgresql://postgres:YOUR_DB_PASSWORD@localhost:5432/YOUR_DB_NAME?schema=public"
 ```
 - 2_ Insira corretamente os dados nos campos ao cadastrar novos pedais. Os campos que estão com a identificação de date_, são do tipo Data. Ex: 2022-01-12 = YYYY-MM-DD.
 
