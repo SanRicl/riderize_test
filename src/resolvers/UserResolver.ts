@@ -22,7 +22,15 @@ export class UserResolver {
     @Arg('data') data: UserInputData,
     @Ctx() ctx: Context,
   ): Promise<User> {
+    if (!data.password) throw new Error('Invalid Email or Password.');
+
     const hashedPassword = await hash(data.password, 10);
+
+    const user = await ctx.prisma.user.findUnique({
+      where: { email: data.email },
+    });
+
+    if (user) throw new Error('User already exists.');
 
     const newUser = await ctx.prisma.user.create({
       data: { ...data, password: hashedPassword },
@@ -41,7 +49,7 @@ export class UserResolver {
       where: { id },
     });
 
-    if (!user) throw new Error('User does not exists');
+    if (!user) throw new Error('User does not exists.');
     return user;
   }
 
@@ -61,7 +69,7 @@ export class UserResolver {
     @Arg('id') id: number,
   ): Promise<User> {
     const user = await ctx.prisma.user.findUnique({ where: { id } });
-    if (!user) throw new Error('User does not exists');
+    if (!user) throw new Error('User does not exists.');
     return user;
   }
 
@@ -73,7 +81,6 @@ export class UserResolver {
     const subscriptions = await ctx.prisma.subscription.findMany({
       where: { user_id: subscription.id },
     });
-
     return subscriptions;
   }
 }

@@ -14,12 +14,12 @@ export class SessionResolver {
       where: { email: data.email },
     });
 
-    if (!user) throw new Error('Incorrect email/password combination');
+    if (!user) throw new Error('Incorrect email/password combination.');
 
     const matchedPassword = await compare(data.password, user.password);
 
     if (!matchedPassword) {
-      throw new Error('Incorrect email/password combination');
+      throw new Error('Incorrect email/password combination.');
     }
 
     const { secret, expiresIn } = AuthConfig.jwt;
