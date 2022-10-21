@@ -6,9 +6,13 @@ Resolução do challenge imposto pela RideRize.
 
 - NodeJS
 
-- Prisma
-
 - Typescript
+
+- Docker
+
+- Redis
+
+- Prisma
 
 - Type-GraphQL
 
@@ -43,16 +47,21 @@ $ docker compose up
 $ npx prisma db push || yarn prisma db pull
 $ npx prisma migrate dev || yarn prisma migrate dev
 ```
+
 <br>
 
 # Nota
-- 1_ Um arquivo .env deve ser criado no root da aplicação com os dados do banco de dados caso o prisma nao o gere automaticamente. Abaixo segue o conteudo do arquivo. Modifique com as suas informações.
+
+- 1\_ Um arquivo .env deve ser criado no root da aplicação com os dados do banco de dados caso o prisma nao o gere automaticamente. Abaixo segue o conteudo do arquivo. Modifique com as suas informações.
 
 ```
 DATABASE_URL="postgresql://postgres:YOUR_DB_PASSWORD@localhost:5432/YOUR_DB_NAME?schema=public"
 ```
-- 2_ Insira corretamente os dados nos campos ao cadastrar novos pedais. Os campos que estão com a identificação de date_, são do tipo Data. Ex: 2022-01-12 = YYYY-MM-DD.
 
+- 2* Insira corretamente os dados nos campos ao cadastrar novos pedais. Os campos que estão com a identificação de date*, são do tipo Data. Ex: 2022-01-12 = YYYY-MM-DD.
+
+
+- 3* Fazer o build da aplicação antes de rodar o 'docker compose up' =)
 
 ## Rodando aplicação
 
