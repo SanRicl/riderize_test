@@ -76,10 +76,12 @@ export class UserResolver {
   @FieldResolver(() => [Subscription])
   async subscription(
     @Root() subscription: Subscription,
+    @Root() user: User,
+    @Root() ride: Ride,
     @Ctx() ctx: Context,
   ): Promise<Subscription[]> {
     const subscriptions = await ctx.prisma.subscription.findMany({
-      where: { user_id: subscription.id },
+      where: { user_id: user.id },
     });
     return subscriptions;
   }

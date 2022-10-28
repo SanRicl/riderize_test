@@ -3,9 +3,6 @@ import { Field, ObjectType, ID } from 'type-graphql';
 
 @ObjectType()
 export class Subscription {
-  @Field(type => ID, { nullable: false })
-  id: number;
-
   @Field(type => Number, { nullable: false })
   ride_id: number;
 

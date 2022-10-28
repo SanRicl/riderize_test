@@ -32,14 +32,13 @@ model Ride {
   participants_limit      Int?
   created_at              DateTime       @default(now())
   subscriptions           Subscription[]
-  User                    User?          @relation(fields: [userId], references: [id])
+  User                    User           @relation(fields: [userId], references: [id])
   userId                  Int
 
   @@map("rides")
 }
 
 model Subscription {
-  id                Int      @id @default(autoincrement())
   user_id           Int
   ride_id           Int
   subscription_date DateTime @default(now())
@@ -47,5 +46,6 @@ model Subscription {
   user User @relation(fields: [user_id], references: [id])
   ride Ride @relation(fields: [ride_id], references: [id])
 
+  @@id([user_id, ride_id])
   @@map("subscriptions")
 }
